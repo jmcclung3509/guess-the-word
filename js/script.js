@@ -18,22 +18,18 @@ const playAgain = document.querySelector(".play-again");
 const word = "magnolia";
 
 const updateWord = function (word) {
-    const wordLetters = [];
+    const letterArray = [];
     for (const letter of word) {
-        
-        console.log(letter);
-        wordLetters.push ("●");
-       
+          console.log(letter);
+          letterArray.push("●");
     }
-    wordInProgress.innerText = wordLetters.join("");
+        wordInProgress.innerText=letterArray.join("");
+    };
+    updateWord(word);
 
-};
-updateWord(word);
-
-button.addEventListener ("click", function(e) {
-    e.preventDefault();
-    const guess = letterInput.value;
-    console.log(guess);
-    letterInput.value = "";
-
-});
+  button.addEventListener ("click", function(e) {
+      e.preventDefault();
+      const inputValue = letterInput.value;
+      console.log(inputValue);
+    letterInput.value= "";
+  });  
