@@ -32,8 +32,8 @@ const updateWord = function (word) {
       e.preventDefault();
       const guess = letterInput.value;
       //console.log(guess);
-
     message.innerText = "";
+
    const goodGuess =  validateInput (guess);
    //console.log(goodGuess);
    if (goodGuess) {
@@ -52,16 +52,52 @@ const updateWord = function (word) {
       message.innerText = "Please guess a letter from A-Z";
     } else {
       return input;
+    
     }
   };
 
   const makeGuess = function (guess) {
     guess = guess.toUpperCase();
     if (guessedLetters.includes(guess)) {
-      message.innerText = "You already guessed that letter"
+      message.innerText = "You already guessed that letter."
     } else {
       guessedLetters.push(guess);
       console.log(guessedLetters);
+      showGuessedLetters();
+      updatedWordInProgress(guessedLetters);
     }
   }
    
+  const showGuessedLetters = function () {
+    guessedLettersList.innerHTML = "";
+    for (const letter of guessedLetters) {
+      const li = document.createElement ("li");
+      li.innerText = letter;
+    guessedLettersList.append(li);
+  }
+};
+
+const updatedWordInProgress  = function (guessedLetters) {
+  const wordUpper = word.toUpperCase();
+  const wordArray = wordUpper.split("");
+  //console.log(wordArray);
+  const showWord = [];
+  for (const letter of wordArray) {
+   if (guessedLetters.includes(letter)) {
+
+      showWord.push(letter.toUpperCase());
+    } else {
+      showWord.push ("●");
+    }
+    wordInProgress.innerText = showWord.join("");
+  } 
+  guessedWord();
+};
+
+const guessedWord = function () {
+   if (word.toUpperCase() === wordInProgress.innerText) {
+     message.classList.add("win");
+     message.innerHTML = `<p class = "highlight"> You guessed the correct word! Congrats!</p>`;
+
+   }
+};
