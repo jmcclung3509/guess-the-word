@@ -15,8 +15,9 @@ const message = document.querySelector(".message");
 //Hidden button that will prompt player to play again
 const playAgain = document.querySelector(".play-again");
 
-const word = "magnolia";
+let word = "magnolia";
 const guessedLetters = [];
+let remainingGuesses = 8;
 
 const updateWord = function (word) {
     const letterArray = [];
@@ -31,7 +32,7 @@ const updateWord = function (word) {
   button.addEventListener ("click", function(e) {
       e.preventDefault();
       const guess = letterInput.value;
-      //console.log(guess);
+      console.log(guess);
     message.innerText = "";
 
    const goodGuess =  validateInput (guess);
@@ -64,6 +65,7 @@ const updateWord = function (word) {
       guessedLetters.push(guess);
       console.log(guessedLetters);
       showGuessedLetters();
+      countGuesses(guess);
       updatedWordInProgress(guessedLetters);
     }
   }
@@ -84,15 +86,33 @@ const updatedWordInProgress  = function (guessedLetters) {
   const showWord = [];
   for (const letter of wordArray) {
    if (guessedLetters.includes(letter)) {
-
       showWord.push(letter.toUpperCase());
     } else {
       showWord.push ("●");
     }
+  }
     wordInProgress.innerText = showWord.join("");
-  } 
   guessedWord();
 };
+
+const countGuesses = function(guess) {
+  const wordUpper = word.toUpperCase;
+  if (!wordUpper.includes(guess)) {
+    message.innerText = "Sorry the word does not include that letter";
+    remainingGuesses= -1;
+  } else {
+    message.innerText = "Yay! You guessed a correct letter";
+  }
+
+  if (remainingGuesses === 0) {
+    message.innerHTML = `I'm sorry you have no more guesses. The word was <span class = highlight> ${word}</span>`;
+  } else if (remainingGuesses === 1) {
+    remainingSpan.innerText = `You have ${remainingGuesses} more guess`;
+  } else {
+    remainingSpan.innerText = `You have ${remainingGuesses} guesses left`;
+  }
+ };
+
 
 const guessedWord = function () {
    if (word.toUpperCase() === wordInProgress.innerText) {
@@ -101,3 +121,4 @@ const guessedWord = function () {
 
    }
 };
+
