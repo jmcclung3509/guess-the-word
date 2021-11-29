@@ -22,7 +22,7 @@ let remainingGuesses = 8;
 const getWord = async function () {
   const res = await fetch ("https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt");
   const data = await res.text();
-   const wordArray = data.split("/n");
+   const wordArray = data.split("\n");
      const randomIndex = Math.floor(Math.random() * wordArray.length);
      word = wordArray[randomIndex].trim();
      updateWord(word);
@@ -119,9 +119,9 @@ const countGuesses = function(guess) {
   if (remainingGuesses === 0) {
     message.innerHTML = `I'm sorry you have no more guesses. The word was <span class = highlight> ${word}</span>`;
   } else if (remainingGuesses === 1) {
-    remainingSpan.innerText = `You have ${remainingGuesses} more guess`;
+    remainingSpan.innerText =  `${remainingGuesses} more guess`;
   } else {
-    remainingSpan.innerText = `You have ${remainingGuesses} guesses left`;
+    remainingSpan.innerText = `${remainingGuesses} guesses left`;
   }
  };
 
