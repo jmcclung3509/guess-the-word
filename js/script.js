@@ -9,7 +9,7 @@ const  wordInProgress = document.querySelector(".word-in-progress");
 //Paragraph where remaining guesses display
 const remaining = document.querySelector(".remaining");
 // The span inside the paragraph where remaining guesses will appear
-const remainingSpan = document.querySelector(".remaining_span");
+const remainingSpan = document.querySelector(".remaining span");
 //Empty paragraph where messages will appear when player guesses a letter
 const message = document.querySelector(".message");
 //Hidden button that will prompt player to play again
@@ -19,6 +19,18 @@ let word = "magnolia";
 const guessedLetters = [];
 let remainingGuesses = 8;
 
+const getWord = async function () {
+  const res = await fetch ("https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt");
+  const data = await res.text();
+   const wordArray = data.split("/n");
+     const randomIndex = Math.floor(Math.random() * wordArray.length);
+     word = wordArray[randomIndex].trim();
+     updateWord(word);
+};
+
+  getWord();
+
+
 const updateWord = function (word) {
     const letterArray = [];
     for (const letter of word) {
@@ -27,7 +39,7 @@ const updateWord = function (word) {
     }
         wordInProgress.innerText=letterArray.join("");
     };
-    updateWord(word);
+    
 
   button.addEventListener ("click", function(e) {
       e.preventDefault();
@@ -96,10 +108,10 @@ const updatedWordInProgress  = function (guessedLetters) {
 };
 
 const countGuesses = function(guess) {
-  const wordUpper = word.toUpperCase;
+  const wordUpper = word.toUpperCase();
   if (!wordUpper.includes(guess)) {
     message.innerText = "Sorry the word does not include that letter";
-    remainingGuesses= -1;
+    remainingGuesses -= 1;
   } else {
     message.innerText = "Yay! You guessed a correct letter";
   }
